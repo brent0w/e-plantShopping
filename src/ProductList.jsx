@@ -1,12 +1,14 @@
 import React, { useState,useEffect } from 'react';
 import './ProductList.css'
-import CartItem from './CartItem';
-import addItem from './CartSlice';
+import CartItem  from './CartItem';
+import { addItem } from './CartSlice';
+import { useDispatch } from 'react-redux';
 
 function ProductList() {
     const [showCart, setShowCart] = useState(false); 
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
     const [addedToCart, setAddedToCart] = useState({});
+    const dispatch = useDispatch();
 
     const plantsArray = [
         {
@@ -253,11 +255,11 @@ function ProductList() {
     };
 
     const handleAddToCart = (product) => {
-        // dispatch(addItem(product));
         setAddedToCart((prevState) => ({
             ...prevState,
             [product.name]: true,
         }));
+        dispatch(addItem(product));
     };
 
     return (
@@ -286,16 +288,16 @@ function ProductList() {
                 <div key={index}>
                     <h1 className='plant_heading'>{category.category}</h1>
                         <div className='product-list'>
-                            {category.plants.map((i, iIndex) => (
-                                <div key={iIndex} className="product-card">
-                                    <div className="product-title">{i.name}</div>
-                                    <img className="product-image" src={i.image} alt={i.name} />
-                                    <p>{i.description}</p>
-                                    <div className="product-price">{i.cost}</div>
-                                    {addedToCart[i.name] === true ? (
+                            {category.plants.map((item, itemIndex) => (
+                                <div className="product-card" key={itemIndex}>
+                                    <div className="product-title">{item.name}</div>
+                                    <img className="product-image" src={item.image} alt={item.name} />
+                                    <p>{item.description}</p>
+                                    <div className="product-price">{item.cost}</div>
+                                    {addedToCart[item.name] === true ? (
                                         <button className="product-button added-to-cart"> Added to Cart </button>
                                     ) : (
-                                        <button onClick={() => handleAddToCart(i)} className="product-button"> Add to Cart </button>
+                                        <button className="product-button" onClick={() => handleAddToCart(item)}> Add to Cart </button>
                                     )}                               
                                </div>
                             ))}
