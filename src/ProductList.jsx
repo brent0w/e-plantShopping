@@ -292,8 +292,12 @@ function ProductList() {
                                     <img className="product-image" src={i.image} alt={i.name} />
                                     <p>{i.description}</p>
                                     <div className="product-price">{i.cost}</div>
-                                    <button className="product-button" onClick={() => handleAddToCart(i)}>{addedToCart[i.name] === true ? "In Cart ": "Add to Cart"}</button>
-                                </div>
+                                    {addedToCart[i.name] === true ? (
+                                        <button className="product-button added-to-cart"> Added to Cart </button>
+                                    ) : (
+                                        <button onClick={() => handleAddToCart(i)} className="product-button"> Add to Cart </button>
+                                    )}                               
+                               </div>
                             ))}
                         </div>
                 </div>
