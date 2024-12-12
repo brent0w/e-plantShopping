@@ -10,7 +10,6 @@ export const CartSlice = createSlice({
     addItem: (state, action) => {  // Receives object with item name, image, cost
         const {name, image, cost} = action.payload;
         state.items.push({ name, image, cost, quantity: 1, });
-        console.log(state.items);
     },
     
     removeItem: (state, action) => {  // Receives name of item to remove
@@ -18,7 +17,7 @@ export const CartSlice = createSlice({
     },
     updateQuantity: (state, action) => {  // Receives object with item name and quantity
         const {name, quantity} = action.payload;
-        const itemToUpdate = state.items.find(item => item.name !== name)
+        const itemToUpdate = state.items.find(item => item.name == name)
         if (itemToUpdate) {
             itemToUpdate.quantity = quantity;
         }
