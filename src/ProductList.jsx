@@ -263,6 +263,13 @@ function ProductList() {
         dispatch(addItem(product));
     };
 
+    const removeFromCart = (product) => {
+        setAddedToCart((prevState) => ({
+            ...prevState,
+            [product.name]: false,
+        }));
+    };
+
     const totalItems = () => {
         let total = 0;
         cart.forEach((item) => {
@@ -315,7 +322,10 @@ function ProductList() {
             ))}
         </div>
  ) :  (
-    <CartItem onContinueShopping={handleContinueShopping}/>
+    <CartItem 
+        onContinueShopping={handleContinueShopping}
+        onRemove={removeFromCart}
+    />
 )}
     </div>
     );
